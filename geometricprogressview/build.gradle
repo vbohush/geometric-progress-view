@@ -33,3 +33,31 @@ task createJar(type: Copy) {
 }
 
 createJar.dependsOn(deleteJar, build)
+
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'geometric-progress-view'
+
+    publishedGroupId = 'net.bohush.geometricprogressview'
+    libraryName = 'GeometricProgressView'
+    artifact = 'geometricprogressview'
+
+    libraryDescription = 'Geometric progress view'
+
+    siteUrl = 'https://github.com/vbohush/geometric-progress-view'
+    gitUrl = 'https://github.com/vbohush/geometric-progress-view.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'vbohush'
+    developerName = 'Viktor Bohush'
+    developerEmail = 'viktor@bohush.net'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
