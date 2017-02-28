@@ -1,5 +1,10 @@
 # GeometricProgressView
 
+[![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=15)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-GeometricProgressView-brightgreen.svg?style=flat-square)](https://android-arsenal.com/details/1/5376)
+
+Customizable progress indicator in the form of 2D geometric shapes 
+
 ![](screenshot/screenshot.gif)
 
 ## Usage
