@@ -13,10 +13,15 @@ Customizable progress indicator in the form of 2D geometric shapes
 <net.bohush.geometricprogressview.GeometricProgressView
     android:id="@+id/progressView"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    app:gp_type="triangle"
+    app:gp_number_of_angles="7"
+    app:gp_color="@android:color/black"
+    app:gp_duration="800"
+    app:gp_figure_padding="3dp" />
 ```
 
-## Customize
+## Customize programmatically
 ```java
 GeometricProgressView progressView = (GeometricProgressView) findViewById(R.id.progressView);
 progressView.setType(GeometricProgressView.TYPE.KITE);

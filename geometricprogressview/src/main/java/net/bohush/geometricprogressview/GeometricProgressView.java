@@ -2,6 +2,7 @@ package net.bohush.geometricprogressview;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -36,30 +37,49 @@ public class GeometricProgressView extends View {
     private List<ValueAnimator> animators;
     private GeometricProgressView.TYPE type;
 
+    Paint p = new Paint();
+    Path path = new Path();
+
     public GeometricProgressView(Context context) {
-        super(context);
-        initialize();
+        this(context, null);
     }
 
     public GeometricProgressView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initialize();
+        this(context, attrs, 0);
     }
 
     public GeometricProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initialize();
+        initialize(context, attrs);
     }
 
-    private void initialize() {
+    private void initialize(Context context, AttributeSet attrs) {
         desiredWidth = dpToPx(DEFAULT_SIZE);
         desiredHeight = dpToPx(DEFAULT_SIZE);
-        figurePadding = dpToPx(DEFAULT_FIGURE_PADDING);
-        numberOfAngles = DEFAULT_NUMBER_OF_ANGLES;
-        type = DEFAULT_TYPE;
-        duration = DEFAULT_DURATION;
         center = new PointF(0, 0);
-        setColor(Color.parseColor(DEFAULT_COLOR));
+        if (attrs != null) {
+            final TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.GeometricProgressView);
+            figurePadding = array.getDimensionPixelSize(R.styleable.GeometricProgressView_gp_figure_padding, DEFAULT_FIGURE_PADDING);
+            numberOfAngles = array.getInteger(R.styleable.GeometricProgressView_gp_number_of_angles, DEFAULT_NUMBER_OF_ANGLES);
+            setColor(array.getColor(R.styleable.GeometricProgressView_gp_color, Color.parseColor(DEFAULT_COLOR)));
+            duration = array.getInteger(R.styleable.GeometricProgressView_gp_duration, DEFAULT_DURATION);
+            int typeInt = array.getInt(R.styleable.GeometricProgressView_gp_type, 0);
+            switch (typeInt) {
+                case 0:
+                    type = TYPE.KITE;
+                    break;
+                case 1:
+                    type = TYPE.TRIANGLE;
+                    break;
+            }
+            array.recycle();
+        } else {
+            figurePadding = dpToPx(DEFAULT_FIGURE_PADDING);
+            numberOfAngles = DEFAULT_NUMBER_OF_ANGLES;
+            setColor(Color.parseColor(DEFAULT_COLOR));
+            duration = DEFAULT_DURATION;
+            type = DEFAULT_TYPE;
+        }
     }
 
     @Override
@@ -121,7 +141,7 @@ public class GeometricProgressView extends View {
     }
 
     private void initializeFigures() {
-        cancelAnimation();
+        if (!isInEditMode()) cancelAnimation();
         int size = Math.min(width, height);
 
         double circumference = numberOfAngles * figurePadding;
@@ -133,7 +153,8 @@ public class GeometricProgressView extends View {
             double angle = startAngle + i * (360.0 / numberOfAngles);
             angles.add(new PointF(
                     (float) (center.x + radius * Math.cos(Math.toRadians(angle))),
-                    (float) (center.y + radius * Math.sin(Math.toRadians(angle)))));
+                    (float) (center.y + radius * Math.sin(Math.toRadians(angle))))
+            );
         }
 
         figures = new ArrayList<>();
@@ -147,9 +168,15 @@ public class GeometricProgressView extends View {
 
     private void buildFiguresUsingKites(List<PointF> angles, double startAngle, double distanceFromCenter) {
         for (int i = 0; i < angles.size(); i++) {
+
+            double angle = startAngle + i * (360.0 / numberOfAngles);
+            float newCenterX = (float) (distanceFromCenter * Math.cos(Math.toRadians(angle)));
+            float newCenterY = (float) (distanceFromCenter * Math.sin(Math.toRadians(angle)));
+
+
             Path path = new Path();
 
-            path.moveTo(center.x, center.y);
+            path.moveTo(newCenterX + center.x, newCenterY + center.y);
 
             PointF point2;
             if (i <= 0) {
@@ -157,9 +184,9 @@ public class GeometricProgressView extends View {
             } else {
                 point2 = getPointBetweenPoints(angles.get(i), angles.get(i - 1));
             }
-            path.lineTo(point2.x, point2.y);
+            path.lineTo(newCenterX + point2.x, newCenterY + point2.y);
 
-            path.lineTo(angles.get(i).x, angles.get(i).y);
+            path.lineTo(newCenterX + angles.get(i).x, newCenterY + angles.get(i).y);
 
             PointF point3;
             if (i >= (angles.size() - 1)) {
@@ -168,52 +195,35 @@ public class GeometricProgressView extends View {
                 point3 = getPointBetweenPoints(angles.get(i), angles.get(i + 1));
 
             }
-            path.lineTo(point3.x, point3.y);
-            path.lineTo(center.x, center.y);
+            path.lineTo(newCenterX + point3.x, newCenterY + point3.y);
+            path.lineTo(newCenterX + center.x, newCenterY + center.y);
+            path.close();
 
-            double angle = startAngle + i * (360.0 / numberOfAngles);
-            float newCenterX = (float) (distanceFromCenter * Math.cos(Math.toRadians(angle)));
-            float newCenterY = (float) (distanceFromCenter * Math.sin(Math.toRadians(angle)));
-
-            path.offset(newCenterX, newCenterY);
-
-            Figure figure = new Figure();
-            figure.setColor(color);
-            figure.setAlpha(0);
-            figure.setPath(path);
-            figures.add(figure);
+            figures.add(new Figure(path, color, isInEditMode() ? (int) (25.0 + i * (230.0 / numberOfAngles)) : 0));
         }
     }
 
     private void buildFiguresUsingTriangles(List<PointF> angles, double startAngle, double distanceFromCenter) {
         for (int i = 0; i < angles.size(); i++) {
-            Path path = new Path();
-
-            path.moveTo(center.x, center.y);
-            path.lineTo(angles.get(i).x, angles.get(i).y);
-            if (i >= (angles.size() - 1)) {
-                path.lineTo(angles.get(0).x, angles.get(0).y);
-            } else {
-                path.lineTo(angles.get(i + 1).x, angles.get(i + 1).y);
-
-            }
-            path.lineTo(center.x, center.y);
 
             double angle1 = startAngle + i * (360.0 / numberOfAngles);
             double angle2 = startAngle + (i + 1) * (360.0 / numberOfAngles);
             double angle = (angle1 + angle2) / 2;
-
-
             float newCenterX = (float) (distanceFromCenter * Math.cos(Math.toRadians(angle)));
             float newCenterY = (float) (distanceFromCenter * Math.sin(Math.toRadians(angle)));
 
-            path.offset(newCenterX, newCenterY);
+            Path path = new Path();
+            path.moveTo(newCenterX + center.x, newCenterY + center.y);
+            path.lineTo(newCenterX + angles.get(i).x, newCenterY + angles.get(i).y);
+            if (i >= (angles.size() - 1)) {
+                path.lineTo(newCenterX + angles.get(0).x, newCenterY + angles.get(0).y);
+            } else {
+                path.lineTo(newCenterX + angles.get(i + 1).x, newCenterY + angles.get(i + 1).y);
+            }
+            path.lineTo(newCenterX + center.x, newCenterY + center.y);
+            path.close();
 
-            Figure figure = new Figure();
-            figure.setColor(color);
-            figure.setAlpha(0);
-            figure.setPath(path);
-            figures.add(figure);
+            figures.add(new Figure(path, color, isInEditMode() ? (int) (25.0 + i * (230.0 / numberOfAngles)) : 0));
         }
     }
 
@@ -224,6 +234,7 @@ public class GeometricProgressView extends View {
     }
 
     private void setupAnimation() {
+        if (isInEditMode()) return;
         cancelAnimation();
         animators = new ArrayList<>();
         for (int i = 0; i < figures.size(); i++) {
@@ -263,6 +274,7 @@ public class GeometricProgressView extends View {
     }
 
     private void cancelAnimation() {
+        if (isInEditMode()) return;
         if (animators != null) {
             for (ValueAnimator valueAnimator : animators) {
                 valueAnimator.cancel();
@@ -279,35 +291,34 @@ public class GeometricProgressView extends View {
 
     private static class Figure {
 
-        private Path path;
-        private Paint paint;
+        private Path mPath;
+        private Paint mPaint;
 
-        Figure() {
-            paint = new Paint();
-            paint.setAntiAlias(true);
-            paint.setStyle(Paint.Style.FILL);
-            paint.setStrokeWidth(0);
+        private Figure(Path path, int color, int alpha) {
+            mPath = path;
+            mPaint = new Paint();
+            mPaint.setAntiAlias(true);
+            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setColor(color);
+            mPaint.setAlpha(alpha);
+            mPaint.setStrokeWidth(0);
         }
 
-        void setColor(int color) {
-            paint.setColor(color);
+        private void setColor(int color) {
+            mPaint.setColor(color);
         }
 
-        void setAlpha(int alpha) {
-            paint.setAlpha(alpha);
+        private void setAlpha(int alpha) {
+            mPaint.setAlpha(alpha);
         }
 
-        void setPath(Path path) {
-            this.path = path;
-        }
-
-        void draw(Canvas canvas) {
-            canvas.drawPath(path, paint);
+        private void draw(Canvas canvas) {
+            canvas.drawPath(mPath, mPaint);
         }
     }
-
 
     public enum TYPE {
         TRIANGLE, KITE
     }
+
 }
