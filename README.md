@@ -36,7 +36,7 @@ Gradle
 
 ```javascript
 dependencies {
-  compile 'net.bohush.geometricprogressview:geometricprogressview:1.0.0'
+  compile 'net.bohush.geometricprogressview:geometricprogressview:1.1.0'
 }
 ```
 
