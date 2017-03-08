@@ -2,6 +2,7 @@
 
 [![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=15)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-GeometricProgressView-brightgreen.svg?style=flat-square)](https://android-arsenal.com/details/1/5376)
+[![MaterialUps](https://img.shields.io/badge/MaterialUps-GeometricProgressView-blue.svg?style=flat-square)](https://material.uplabs.com/posts/geometric-progress-view)
 
 Customizable progress indicator in the form of 2D geometric shapes 
 
@@ -38,7 +39,6 @@ dependencies {
   compile 'net.bohush.geometricprogressview:geometricprogressview:1.0.0'
 }
 ```
-or just copy [GeometricProgressView.java](https://github.com/vbohush/geometric-progress-view/blob/master/geometricprogressview/src/main/java/net/bohush/geometricprogressview/GeometricProgressView.java) to your project
 
 ## License
 
