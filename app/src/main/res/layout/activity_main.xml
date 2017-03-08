@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -22,77 +23,93 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin" />
+                android:layout_margin="@dimen/margin"
+                app:gp_number_of_angles="3" />
 
             <net.bohush.geometricprogressview.GeometricProgressView
                 android:id="@+id/progressView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin" />
+                android:layout_margin="@dimen/margin"
+                app:gp_number_of_angles="4" />
 
             <net.bohush.geometricprogressview.GeometricProgressView
                 android:id="@+id/progressView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin" />
+                android:layout_margin="@dimen/margin"
+                app:gp_number_of_angles="5" />
 
             <net.bohush.geometricprogressview.GeometricProgressView
                 android:id="@+id/progressView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin" />
+                android:layout_margin="@dimen/margin"
+                app:gp_number_of_angles="6" />
 
             <net.bohush.geometricprogressview.GeometricProgressView
                 android:id="@+id/progressView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin" />
+                android:layout_margin="@dimen/margin"
+                app:gp_number_of_angles="10" />
 
         </LinearLayout>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <net.bohush.geometricprogressview.GeometricProgressView
                 android:id="@+id/progressView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin" />
+                android:layout_margin="@dimen/margin"
+                app:gp_number_of_angles="3"
+                app:gp_type="triangle" />
 
             <net.bohush.geometricprogressview.GeometricProgressView
                 android:id="@+id/progressView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin" />
+                android:layout_margin="@dimen/margin"
+                app:gp_number_of_angles="4"
+                app:gp_type="triangle" />
 
             <net.bohush.geometricprogressview.GeometricProgressView
                 android:id="@+id/progressView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin" />
+                android:layout_margin="@dimen/margin"
+                app:gp_color="@android:color/holo_blue_dark"
+                app:gp_number_of_angles="5"
+                app:gp_type="triangle" />
 
             <net.bohush.geometricprogressview.GeometricProgressView
                 android:id="@+id/progressView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin" />
+                android:layout_margin="@dimen/margin"
+                app:gp_number_of_angles="6"
+                app:gp_type="triangle" />
 
             <net.bohush.geometricprogressview.GeometricProgressView
                 android:id="@+id/progressView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin" />
+                android:layout_margin="@dimen/margin"
+                app:gp_number_of_angles="10"
+                app:gp_type="triangle" />
 
         </LinearLayout>
 
@@ -106,35 +123,47 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin" />
+                android:layout_margin="@dimen/margin"
+                app:gp_duration="3000"
+                app:gp_number_of_angles="8" />
 
             <net.bohush.geometricprogressview.GeometricProgressView
                 android:id="@+id/progressView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin" />
+                android:layout_margin="@dimen/margin"
+                app:gp_figure_padding="8dp"
+                app:gp_number_of_angles="6"
+                app:gp_type="triangle" />
 
             <net.bohush.geometricprogressview.GeometricProgressView
                 android:id="@+id/progressView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin" />
+                android:layout_margin="@dimen/margin"
+                app:gp_duration="500"
+                app:gp_number_of_angles="6" />
 
             <net.bohush.geometricprogressview.GeometricProgressView
                 android:id="@+id/progressView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin" />
+                android:layout_margin="@dimen/margin"
+                app:gp_figure_padding="8dp"
+                app:gp_number_of_angles="10"
+                app:gp_type="triangle" />
 
             <net.bohush.geometricprogressview.GeometricProgressView
                 android:id="@+id/progressView15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin" />
+                android:layout_margin="@dimen/margin"
+                app:gp_figure_padding="1dp"
+                app:gp_number_of_angles="30" />
 
         </LinearLayout>
     </LinearLayout>
