@@ -1,8 +1,9 @@
 # GeometricProgressView
 
-[![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square)](https://android-arsenal.com/api?level=15)
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-GeometricProgressView-brightgreen.svg?style=flat-square)](https://android-arsenal.com/details/1/5376)
-[![MaterialUps](https://img.shields.io/badge/MaterialUps-GeometricProgressView-blue.svg?style=flat-square)](https://material.uplabs.com/posts/geometric-progress-view)
+[![Build Status](https://travis-ci.org/vbohush/geometric-progress-view.svg?branch=master)](https://travis-ci.org/vbohush/geometric-progress-view)
+[![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=square)](https://android-arsenal.com/api?level=15)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-GeometricProgressView-brightgreen.svg?style=square)](https://android-arsenal.com/details/1/5376)
+[![MaterialUps](https://img.shields.io/badge/MaterialUps-GeometricProgressView-blue.svg?style=square)](https://material.uplabs.com/posts/geometric-progress-view)
 
 Customizable progress indicator in the form of 2D geometric shapes 
 
@@ -25,7 +26,7 @@ Customizable progress indicator in the form of 2D geometric shapes
 ## Customize programmatically
 ```java
 GeometricProgressView progressView = (GeometricProgressView) findViewById(R.id.progressView);
-progressView.setType(GeometricProgressView.TYPE.KITE);
+progressView.setType(TYPE.KITE);
 progressView.setNumberOfAngles(6);
 progressView.setColor(Color.parseColor("#00897b"));
 progressView.setDuration(1000);
@@ -36,7 +37,7 @@ Gradle
 
 ```javascript
 dependencies {
-  compile 'net.bohush.geometricprogressview:geometricprogressview:1.1.0'
+  compile 'net.bohush.geometricprogressview:geometricprogressview:1.1.1'
 }
 ```
 

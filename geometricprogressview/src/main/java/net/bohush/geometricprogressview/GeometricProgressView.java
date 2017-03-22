@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.util.AttributeSet;
@@ -35,10 +34,7 @@ public class GeometricProgressView extends View {
     private int numberOfAngles;
     private List<Figure> figures;
     private List<ValueAnimator> animators;
-    private GeometricProgressView.TYPE type;
-
-    Paint p = new Paint();
-    Path path = new Path();
+    private TYPE type;
 
     public GeometricProgressView(Context context) {
         this(context, null);
@@ -137,7 +133,9 @@ public class GeometricProgressView extends View {
 
     public void setDuration(int duration) {
         this.duration = duration;
-        setupAnimation();
+        if (figures != null) {
+            setupAnimation();
+        }
     }
 
     private void initializeFigures() {
@@ -288,37 +286,4 @@ public class GeometricProgressView extends View {
         DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
         return (int) ((dp * displayMetrics.density) + 0.5);
     }
-
-    private static class Figure {
-
-        private Path mPath;
-        private Paint mPaint;
-
-        private Figure(Path path, int color, int alpha) {
-            mPath = path;
-            mPaint = new Paint();
-            mPaint.setAntiAlias(true);
-            mPaint.setStyle(Paint.Style.FILL);
-            mPaint.setColor(color);
-            mPaint.setAlpha(alpha);
-            mPaint.setStrokeWidth(0);
-        }
-
-        private void setColor(int color) {
-            mPaint.setColor(color);
-        }
-
-        private void setAlpha(int alpha) {
-            mPaint.setAlpha(alpha);
-        }
-
-        private void draw(Canvas canvas) {
-            canvas.drawPath(mPath, mPaint);
-        }
-    }
-
-    public enum TYPE {
-        TRIANGLE, KITE
-    }
-
 }
